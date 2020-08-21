@@ -12,7 +12,8 @@
   <Target Name="SkipLinkingAssemblies" BeforeTargets="PrepareForILLink">
     <ItemGroup>
       <ManagedAssemblyToLink Condition="$([System.String]::Copy('%(Filename)').StartsWith('Microsoft.AspNetCore.DataProtection'))"
-                             IsTrimmable="false" />
+                             IsTrimmable="false"
+                             TrimMode="copyused" />
     </ItemGroup>
   </Target>
 
