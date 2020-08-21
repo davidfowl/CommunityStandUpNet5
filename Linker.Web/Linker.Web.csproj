@@ -9,4 +9,11 @@
     <KnownFrameworkReference Update="Microsoft.AspNetCore.App" IsTrimmable="true" />
   </ItemGroup>
 
+  <Target Name="SkipLinkingAssemblies" BeforeTargets="PrepareForILLink">
+    <ItemGroup>
+      <ManagedAssemblyToLink Condition="$([System.String]::Copy('%(Filename)').StartsWith('Microsoft.AspNetCore.DataProtection'))"
+                             IsTrimmable="false" />
+    </ItemGroup>
+  </Target>
+
 </Project>

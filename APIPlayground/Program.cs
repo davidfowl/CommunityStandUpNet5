@@ -321,7 +321,7 @@ using var listener = new ActivityListener();
 listener.ActivityStarted = activity => { };
 listener.ActivityStopped = activity => { };
 listener.ShouldListenTo = activitySource => true;
-listener.GetRequestedDataUsingContext = (ref ActivityCreationOptions<ActivityContext> context) => ActivityDataRequest.AllData;
+listener.Sample = (ref ActivityCreationOptions<ActivityContext> context) => ActivitySamplingResult.AllData;
 
 ActivitySource.AddActivityListener(listener);
 
