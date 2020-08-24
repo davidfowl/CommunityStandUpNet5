@@ -64,10 +64,10 @@ public class MemoryTransport
             throw new InvalidOperationException($"{endPoint} not bound!");
         }
 
-        var pair = DuplexPipe.CreateConnectionPair(new PipeOptions(), new PipeOptions());
+        var (transport, application) = DuplexPipe.CreatePair(new PipeOptions(), new PipeOptions());
 
-        var serverConnection = Connection.FromPipe(pair.Transport, localEndPoint: endPoint, remoteEndPoint: endPoint);
-        var clientConnection = Connection.FromPipe(pair.Application, localEndPoint: endPoint, remoteEndPoint: endPoint);
+        var serverConnection = Connection.FromPipe(transport, localEndPoint: endPoint, remoteEndPoint: endPoint);
+        var clientConnection = Connection.FromPipe(application, localEndPoint: endPoint, remoteEndPoint: endPoint);
 
         listener.AcceptQueue.Writer.TryWrite(serverConnection);
         return new ValueTask<Connection>(clientConnection);

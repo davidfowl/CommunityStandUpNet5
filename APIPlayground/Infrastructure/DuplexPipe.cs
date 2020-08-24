@@ -12,7 +12,7 @@ internal class DuplexPipe : IDuplexPipe
 
     public PipeWriter Output { get; }
 
-    public static DuplexPipePair CreateConnectionPair(PipeOptions inputOptions, PipeOptions outputOptions)
+    public static (IDuplexPipe Transport, IDuplexPipe Application) CreatePair(PipeOptions inputOptions, PipeOptions outputOptions)
     {
         var input = new Pipe(inputOptions);
         var output = new Pipe(outputOptions);
@@ -20,19 +20,6 @@ internal class DuplexPipe : IDuplexPipe
         var transportToApplication = new DuplexPipe(output.Reader, input.Writer);
         var applicationToTransport = new DuplexPipe(input.Reader, output.Writer);
 
-        return new DuplexPipePair(applicationToTransport, transportToApplication);
-    }
-
-    // This class exists to work around issues with value tuple on .NET Framework
-    public readonly struct DuplexPipePair
-    {
-        public IDuplexPipe Transport { get; }
-        public IDuplexPipe Application { get; }
-
-        public DuplexPipePair(IDuplexPipe transport, IDuplexPipe application)
-        {
-            Transport = transport;
-            Application = application;
-        }
+        return (applicationToTransport, transportToApplication);
     }
 }
