@@ -6,14 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Linker.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <KnownFrameworkReference Update="Microsoft.AspNetCore.App" IsTrimmable="true" />
   </ItemGroup>
 
   <Target Name="SkipLinkingAssemblies" BeforeTargets="PrepareForILLink">
     <ItemGroup>
-      <ManagedAssemblyToLink Condition="$([System.String]::Copy('%(Filename)').StartsWith('Microsoft.AspNetCore.DataProtection'))"
-                             IsTrimmable="false"
-                             TrimMode="copyused" />
+      <ManagedAssemblyToLink Condition="$([System.String]::Copy('%(Filename)').StartsWith('Microsoft.AspNetCore.DataProtection'))" IsTrimmable="false" TrimMode="copyused" />
     </ItemGroup>
   </Target>
 
